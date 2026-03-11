@@ -1,5 +1,8 @@
+import type { ReactNode } from "react";
+
 interface StartScreenProps {
   onStart: () => void;
+  children?: ReactNode;
 }
 
 // Pre-compute star positions so render stays pure
@@ -11,9 +14,11 @@ const STARS = Array.from({ length: 60 }, (_, i) => ({
   opacity: (0.2 + ((i * 11 + 1) % 8) * 0.1).toFixed(2),
 }));
 
-function StartScreen({ onStart }: StartScreenProps) {
+function StartScreen({ onStart, children }: StartScreenProps) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center bg-black">
+      {children}
+
       {/* Animated background stars via CSS */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {STARS.map((s) => (

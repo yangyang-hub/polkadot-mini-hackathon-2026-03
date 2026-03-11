@@ -1,7 +1,12 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
-import StartScreen from "./components/StartScreen";
+import { WagmiProvider, useConnection } from "wagmi";
+import { Connection } from "./components/Connection";
 import GameCanvas from "./components/GameCanvas";
 import GameOverScreen from "./components/GameOverScreen";
+import StartScreen from "./components/StartScreen";
+import { WalletOptions } from "./components/WalletOptions";
+import { config } from "./config";
 import type { GameState } from "./game/types";
 
 export type AppScreen = "start" | "playing" | "gameover";
@@ -10,6 +15,14 @@ export interface GameResult {
   score: number;
   kills: number;
   wave: number;
+}
+
+const queryClient = new QueryClient();
+
+function ConnectWallet() {
+  const { isConnected } = useConnection();
+  if (isConnected) return <Connection />;
+  return <WalletOptions />;
 }
 
 export default function App() {
@@ -30,12 +43,20 @@ export default function App() {
   const handleRestart = () => setScreen("playing");
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-black">
-      {screen === "start" && <StartScreen onStart={handleStart} />}
-      {screen === "playing" && <GameCanvas onGameOver={handleGameOver} />}
-      {screen === "gameover" && (
-        <GameOverScreen result={gameResult} onRestart={handleRestart} />
-      )}
-    </div>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <div className="relative h-screen w-screen overflow-hidden bg-black">
+          {screen === "start" && (
+            <StartScreen onStart={handleStart}>
+              <ConnectWallet />
+            </StartScreen>
+          )}
+          {screen === "playing" && <GameCanvas onGameOver={handleGameOver} />}
+          {screen === "gameover" && (
+            <GameOverScreen result={gameResult} onRestart={handleRestart} />
+          )}
+        </div>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }
