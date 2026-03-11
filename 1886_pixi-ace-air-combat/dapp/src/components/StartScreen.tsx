@@ -11,7 +11,7 @@ const STARS = Array.from({ length: 60 }, (_, i) => ({
   opacity: (0.2 + ((i * 11 + 1) % 8) * 0.1).toFixed(2),
 }));
 
-export default function StartScreen({ onStart }: StartScreenProps) {
+function StartScreen({ onStart }: StartScreenProps) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center bg-black">
       {/* Animated background stars via CSS */}
@@ -138,3 +138,5 @@ export default function StartScreen({ onStart }: StartScreenProps) {
     </div>
   );
 }
+
+export default StartScreen;

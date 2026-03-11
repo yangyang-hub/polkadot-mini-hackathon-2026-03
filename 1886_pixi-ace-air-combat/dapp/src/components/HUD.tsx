@@ -4,7 +4,7 @@ interface HUDProps {
   state: GameState;
 }
 
-export default function HUD({ state }: HUDProps) {
+function HUD({ state }: HUDProps) {
   const hpPercent = (state.playerHp / state.playerMaxHp) * 100;
 
   return (
@@ -86,3 +86,5 @@ export default function HUD({ state }: HUDProps) {
     </div>
   );
 }
+
+export default HUD;

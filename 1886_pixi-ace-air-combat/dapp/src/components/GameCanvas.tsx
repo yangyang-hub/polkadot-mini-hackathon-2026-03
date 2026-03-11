@@ -22,7 +22,7 @@ const INITIAL_HUD_STATE: GameState = {
   over: false,
 };
 
-export default function GameCanvas({ onGameOver }: GameCanvasProps) {
+function GameCanvas({ onGameOver }: GameCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<GameEngine | null>(null);
   const keysRef = useKeyboard();
@@ -97,3 +97,5 @@ export default function GameCanvas({ onGameOver }: GameCanvasProps) {
     </div>
   );
 }
+
+export default GameCanvas;

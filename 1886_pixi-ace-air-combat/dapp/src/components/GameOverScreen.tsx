@@ -5,10 +5,7 @@ interface GameOverScreenProps {
   onRestart: () => void;
 }
 
-export default function GameOverScreen({
-  result,
-  onRestart,
-}: GameOverScreenProps) {
+function GameOverScreen({ result, onRestart }: GameOverScreenProps) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center bg-black">
       {/* Background overlay */}
@@ -104,3 +101,5 @@ function getRank(score: number): string {
   if (score >= 1000) return "▽ ROOKIE ▽";
   return "○ RECRUIT ○";
 }
+
+export default GameOverScreen;

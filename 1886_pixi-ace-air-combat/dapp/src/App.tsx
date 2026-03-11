@@ -2,7 +2,7 @@ import { useState } from "react";
 import StartScreen from "./components/StartScreen";
 import GameCanvas from "./components/GameCanvas";
 import GameOverScreen from "./components/GameOverScreen";
-import { GameState } from "./game/types";
+import type { GameState } from "./game/types";
 
 export type AppScreen = "start" | "playing" | "gameover";
 
