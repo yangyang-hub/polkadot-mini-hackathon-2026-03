@@ -15,7 +15,7 @@ function PauseOverlay({ onResume }: PauseOverlayProps) {
         PAUSED
       </h2>
 
-      <div className="mb-8 h-px w-64 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
+      <div className="mb-8 h-px w-64 bg-linear-to-r from-transparent via-cyan-500 to-transparent" />
 
       <div className="mb-8 font-mono text-sm text-gray-400">
         Press{" "}

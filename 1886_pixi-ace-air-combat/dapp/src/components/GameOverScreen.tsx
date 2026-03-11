@@ -25,7 +25,7 @@ function GameOverScreen({ result, onRestart }: GameOverScreenProps) {
         </h2>
 
         {/* Divider */}
-        <div className="mb-8 h-px w-80 bg-gradient-to-r from-transparent via-red-500 to-transparent" />
+        <div className="mb-8 h-px w-80 bg-linear-to-r from-transparent via-red-500 to-transparent" />
 
         {/* Stats */}
         <div className="mb-8 grid grid-cols-3 gap-8 text-center">
@@ -65,7 +65,7 @@ function GameOverScreen({ result, onRestart }: GameOverScreenProps) {
         </div>
 
         {/* Divider */}
-        <div className="mb-8 h-px w-80 bg-gradient-to-r from-transparent via-red-500 to-transparent" />
+        <div className="mb-8 h-px w-80 bg-linear-to-r from-transparent via-red-500 to-transparent" />
 
         {/* Rank */}
         <div className="mb-8 text-center">

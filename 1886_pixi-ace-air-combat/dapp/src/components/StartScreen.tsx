@@ -58,7 +58,7 @@ function StartScreen({ onStart }: StartScreenProps) {
       </div>
 
       {/* Divider */}
-      <div className="my-6 h-px w-64 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
+      <div className="my-6 h-px w-64 bg-linear-to-r from-transparent via-cyan-500 to-transparent" />
 
       {/* Controls */}
       <div className="mb-8 grid grid-cols-2 gap-6 text-center">
