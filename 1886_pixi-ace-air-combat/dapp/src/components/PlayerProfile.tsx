@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { formatEther, type Address } from "viem";
-import { usePlayerInfo, usePrizePool, useRegisterPlayer, type PlayerContractData } from "../hooks/useContract";
+import {
+  usePlayerInfo,
+  usePrizePool,
+  useRegisterPlayer,
+  type PlayerContractData,
+} from "../hooks/useContract";
 import PlaneUpgradeModal from "./PlaneUpgradeModal";
 import type { PlaneStats } from "../game/types";
 

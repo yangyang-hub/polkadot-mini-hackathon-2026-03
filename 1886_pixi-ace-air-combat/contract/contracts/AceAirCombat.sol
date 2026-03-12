@@ -68,13 +68,9 @@ contract AceAirCombat {
     ) public payable {
         require(players[msg.sender].registered, "Player not registered");
         uint256 totalPoints;
-        if (moveSpeed > 0) {
-            totalPoints += 1;
-        } else if (attackSpeed > 0) {
-            totalPoints += 1;
-        } else if (firepower > 0) {
-            totalPoints += 1;
-        }
+        if (moveSpeed > 0) totalPoints += 1;
+        if (attackSpeed > 0) totalPoints += 1;
+        if (firepower > 0) totalPoints += 1;
         require(totalPoints > 0, "Must upgrade at least one attribute");
         uint256 requiredCost = totalPoints * UPGRADE_COST_PER_POINT;
         require(msg.value == requiredCost, "Incorrect ETH amount sent");

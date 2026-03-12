@@ -32,7 +32,11 @@ export class Player implements PlayerData {
   private canvasWidth: number;
   private canvasHeight: number;
 
-  constructor(canvasWidth: number, canvasHeight: number, planeStats?: PlaneStats) {
+  constructor(
+    canvasWidth: number,
+    canvasHeight: number,
+    planeStats?: PlaneStats,
+  ) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.position = { x: canvasWidth / 2, y: canvasHeight - 100 };
@@ -109,7 +113,14 @@ export class Player implements PlayerData {
         : this.shootInterval;
       this.shootTimer = interval;
       bullets.push(
-        new Bullet(this.position.x, this.position.y - hh, 0, -10, "player", this.bulletDamage),
+        new Bullet(
+          this.position.x,
+          this.position.y - hh,
+          0,
+          -10,
+          "player",
+          this.bulletDamage,
+        ),
       );
       // Spread shot when rapid fire
       if (this.rapidFireActive) {

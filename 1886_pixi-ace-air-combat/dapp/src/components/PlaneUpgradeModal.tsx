@@ -72,8 +72,10 @@ export default function PlaneUpgradeModal({
     color: string;
   }) => (
     <div className="flex items-center justify-between gap-4 font-mono text-sm">
-      <span className={`w-32 ${color} uppercase tracking-widest`}>{label}</span>
-      <span className="w-12 text-right text-white">Lv.{current.toString()}</span>
+      <span className={`w-32 ${color} tracking-widest uppercase`}>{label}</span>
+      <span className="w-12 text-right text-white">
+        Lv.{current.toString()}
+      </span>
       <div className="flex items-center gap-2">
         <button
           onClick={() => delta > 0n && setDelta(delta - 1n)}
@@ -82,7 +84,9 @@ export default function PlaneUpgradeModal({
         >
           −
         </button>
-        <span className="w-6 text-center text-cyan-400">{delta.toString()}</span>
+        <span className="w-6 text-center text-cyan-400">
+          {delta.toString()}
+        </span>
         <button
           onClick={() => setDelta(delta + 1n)}
           className="h-7 w-7 cursor-pointer rounded border border-gray-600 bg-gray-800 text-white hover:border-cyan-400"

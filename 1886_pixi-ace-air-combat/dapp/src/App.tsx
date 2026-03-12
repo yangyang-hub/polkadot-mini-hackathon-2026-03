@@ -42,9 +42,7 @@ function AppInner() {
     isConnected ? (address as Address) : undefined,
   );
 
-  const plane = playerData
-    ? (playerData as PlayerContractData)[2]
-    : undefined;
+  const plane = playerData ? (playerData as PlayerContractData)[2] : undefined;
 
   const planeStats: PlaneStats | undefined = plane
     ? {

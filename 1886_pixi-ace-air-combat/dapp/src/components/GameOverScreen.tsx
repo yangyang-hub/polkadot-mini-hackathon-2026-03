@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { formatEther, type Address } from "viem";
 import type { GameResult } from "../App";
-import { usePlayerInfo, usePrizePool, type PlayerContractData } from "../hooks/useContract";
+import {
+  usePlayerInfo,
+  usePrizePool,
+  type PlayerContractData,
+} from "../hooks/useContract";
 import PlaneUpgradeModal from "./PlaneUpgradeModal";
 import type { PlaneStats } from "../game/types";
 
@@ -108,23 +112,31 @@ function GameOverScreen({ result, onRestart, address }: GameOverScreenProps) {
             <div className="mb-2 font-mono text-xs tracking-widest text-cyan-500 uppercase">
               Plane Stats
             </div>
-            <div className="mb-3 grid grid-cols-3 gap-2 font-mono text-xs text-center">
+            <div className="mb-3 grid grid-cols-3 gap-2 text-center font-mono text-xs">
               <div>
                 <div className="text-blue-400">Speed</div>
-                <div className="text-white">Lv.{currentStats.moveSpeed.toString()}</div>
+                <div className="text-white">
+                  Lv.{currentStats.moveSpeed.toString()}
+                </div>
               </div>
               <div>
                 <div className="text-yellow-400">Atk Spd</div>
-                <div className="text-white">Lv.{currentStats.attackSpeed.toString()}</div>
+                <div className="text-white">
+                  Lv.{currentStats.attackSpeed.toString()}
+                </div>
               </div>
               <div>
                 <div className="text-red-400">Firepower</div>
-                <div className="text-white">Lv.{currentStats.firepower.toString()}</div>
+                <div className="text-white">
+                  Lv.{currentStats.firepower.toString()}
+                </div>
               </div>
             </div>
             <div className="mb-2 flex justify-between font-mono text-xs">
               <span className="text-gray-400">Prize Pool</span>
-              <span className="text-cyan-400">{formatEther(prizePool)} PAS</span>
+              <span className="text-cyan-400">
+                {formatEther(prizePool)} PAS
+              </span>
             </div>
             <button
               onClick={() => setUpgradeOpen(true)}

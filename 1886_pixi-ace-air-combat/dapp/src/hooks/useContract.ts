@@ -91,6 +91,10 @@ export function useUpgradePlane() {
       functionName: "upgradePlane",
       args: [moveSpeed, attackSpeed, firepower],
       value,
+      // ✅ Force sane gas — MetaMask will use this instead of asking the RPC
+      maxFeePerGas: 2_000_000_000_000n, // 2000 Gwei
+      maxPriorityFeePerGas: 2_000_000_000_000n,
+      gas: 100_000n, // explicit gas limit
     });
 
   return { upgrade, isPending, isConfirming, isSuccess, error };
