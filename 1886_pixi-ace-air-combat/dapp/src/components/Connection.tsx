@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useConnection, useDisconnect, useEnsAvatar, useEnsName } from "wagmi";
 
 export function Connection() {
@@ -9,8 +10,14 @@ export function Connection() {
   return (
     <div>
       {ensAvatar && <img alt="ENS Avatar" src={ensAvatar} />}
-      {address && <div>{ensName ? `${ensName} (${address})` : address}</div>}
-      <button onClick={() => disconnect.mutate()}>Disconnect</button>
+      {address && (
+        <p>
+          {ensName
+            ? `${ensName} (${address.slice(0, 5)}***${address.slice(-3)})`
+            : `${address.slice(0, 5)}***${address.slice(-3)}`}
+        </p>
+      )}
+      <Button onClick={() => disconnect.mutate()}>Disconnect</Button>
     </div>
   );
 }
