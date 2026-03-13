@@ -196,11 +196,7 @@ function GameOverScreen({ result, onRestart, address }: GameOverScreenProps) {
             ) : (
               <button
                 onClick={handleSubmitScore}
-                disabled={
-                  submitPending ||
-                  submitConfirming ||
-                  !isNewHighScore
-                }
+                disabled={submitPending || submitConfirming || !isNewHighScore}
                 className="w-full cursor-pointer rounded border border-yellow-500 bg-transparent py-1.5 font-mono text-xs font-bold tracking-[0.2em] text-yellow-400 uppercase transition-all hover:bg-yellow-500 hover:text-black disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-yellow-400"
               >
                 {submitPending || submitConfirming

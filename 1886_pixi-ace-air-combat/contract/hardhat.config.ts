@@ -39,7 +39,7 @@ export default defineConfig({
       chainType: "l1",
       url: configVariable("POLKADOT_TESTNET_RPC_URL"),
       accounts: [configVariable("POLKADOT_TESTNET_PRIVATE_KEY")],
-      gasPrice: 2000000000, // 2 gwei
+      gasPrice: 2_000_000_000_000, // 2 gwei
     },
   },
 });

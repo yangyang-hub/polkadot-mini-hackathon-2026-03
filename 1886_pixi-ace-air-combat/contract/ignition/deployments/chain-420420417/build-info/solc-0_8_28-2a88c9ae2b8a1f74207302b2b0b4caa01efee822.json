@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-2a88c9ae2b8a1f74207302b2b0b4caa01efee822",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/AceAirCombat.sol": "project/contracts/AceAirCombat.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/AceAirCombat.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract AceAirCombat {\n    struct Plane {\n        uint256 moveSpeed;\n        uint256 attackSpeed;\n        uint256 firepower;\n    }\n\n    struct Player {\n        bool registered;\n        uint256 score;\n        Plane plane;\n    }\n\n    address public owner;\n    uint256 public prizePool;\n    bool public prizePoolInitialized;\n\n    mapping(address => Player) public players;\n\n    /// @notice Cost in wei per single attribute point upgrade.\n    ///         Each point in the delta values costs UPGRADE_COST_PER_POINT wei.\n    ///         e.g. upgrading moveSpeed by 3 and firepower by 5 costs 8 * UPGRADE_COST_PER_POINT.\n    uint256 public constant UPGRADE_COST_PER_POINT = 0.001 ether;\n\n    /// @notice Score units required for one redemption.\n    uint256 public constant SCORE_PER_REDEMPTION = 10_000;\n\n    /// @notice PAS (in wei) awarded per redemption unit.\n    uint256 public constant PAS_PER_REDEMPTION = 0.001 ether; // 1e15 wei\n\n    event PrizePoolInitialized(address indexed initializer, uint256 amount);\n    event ScoreSubmitted(address indexed player, uint256 newScore);\n    event ScoreRedeemed(\n        address indexed player,\n        uint256 scoreSpent,\n        uint256 pasReceived\n    );\n    event PlaneUpgraded(\n        address indexed player,\n        uint256 moveSpeed,\n        uint256 attackSpeed,\n        uint256 firepower,\n        uint256 totalCost\n    );\n\n    modifier onlyOwner() {\n        require(msg.sender == owner, \"Not the contract owner\");\n        _;\n    }\n\n    constructor() {\n        owner = msg.sender;\n    }\n\n    /// @notice Initialize the prize pool by depositing ETH into the contract.\n    ///         Can only be called once by the owner.\n    function initializePrizePool() external payable onlyOwner {\n        require(!prizePoolInitialized, \"Prize pool already initialized\");\n        require(msg.value > 0, \"Must deposit a positive amount\");\n\n        prizePool = msg.value;\n        prizePoolInitialized = true;\n\n        emit PrizePoolInitialized(msg.sender, msg.value);\n    }\n\n    function registerPlayer() public {\n        require(!players[msg.sender].registered, \"Player already registered\");\n        players[msg.sender] = Player(true, 0, Plane(1, 1, 1));\n    }\n\n    /// @notice Submit a new score for the caller; only kept if higher than current.\n    function submitScore(uint256 newScore) external {\n        require(players[msg.sender].registered, \"Player not registered\");\n        if (newScore > players[msg.sender].score) {\n            players[msg.sender].score = newScore;\n            emit ScoreSubmitted(msg.sender, newScore);\n        }\n    }\n\n    /// @notice Redeem accumulated score for PAS tokens.\n    ///         scoreToRedeem must be a multiple of SCORE_PER_REDEMPTION.\n    function redeemScore(uint256 scoreToRedeem) external {\n        require(players[msg.sender].registered, \"Player not registered\");\n        require(\n            scoreToRedeem > 0 && scoreToRedeem % SCORE_PER_REDEMPTION == 0,\n            \"scoreToRedeem must be a positive multiple of SCORE_PER_REDEMPTION\"\n        );\n        require(\n            players[msg.sender].score >= scoreToRedeem,\n            \"Insufficient score\"\n        );\n        uint256 redemptions = scoreToRedeem / SCORE_PER_REDEMPTION;\n        uint256 pasAmount = redemptions * PAS_PER_REDEMPTION;\n        require(prizePool >= pasAmount, \"Insufficient prize pool\");\n\n        players[msg.sender].score -= scoreToRedeem;\n        prizePool -= pasAmount;\n\n        (bool sent, ) = payable(msg.sender).call{value: pasAmount}(\"\");\n        require(sent, \"ETH transfer failed\");\n\n        emit ScoreRedeemed(msg.sender, scoreToRedeem, pasAmount);\n    }\n\n    /// @notice Pay ETH to upgrade plane attributes.\n    ///         Total cost = (moveSpeed + attackSpeed + firepower) * UPGRADE_COST_PER_POINT.\n    ///         Each individual point in any attribute delta costs UPGRADE_COST_PER_POINT wei.\n    ///         The payment is added to the prize pool.\n    function upgradePlane(\n        uint256 moveSpeed,\n        uint256 attackSpeed,\n        uint256 firepower\n    ) public payable {\n        require(players[msg.sender].registered, \"Player not registered\");\n        uint256 totalPoints = moveSpeed + attackSpeed + firepower;\n        require(totalPoints > 0, \"Must upgrade at least one attribute\");\n        uint256 requiredCost = totalPoints * UPGRADE_COST_PER_POINT;\n        require(msg.value == requiredCost, \"Incorrect ETH amount sent\");\n\n        players[msg.sender].plane.moveSpeed += moveSpeed;\n        players[msg.sender].plane.attackSpeed += attackSpeed;\n        players[msg.sender].plane.firepower += firepower;\n        prizePool += msg.value;\n\n        emit PlaneUpgraded(\n            msg.sender,\n            moveSpeed,\n            attackSpeed,\n            firepower,\n            msg.value\n        );\n    }\n}\n"
+      }
+    }
+  }
+}
