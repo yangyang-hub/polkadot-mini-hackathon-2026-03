@@ -2,4 +2,5 @@ onlyBuiltDependencies:
   - "@swc/core"
   - bufferutil
   - esbuild
+  - msw
   - utf-8-validate
